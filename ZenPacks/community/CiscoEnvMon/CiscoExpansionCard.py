@@ -12,9 +12,9 @@ __doc__="""CiscoExpansionCard
 
 CiscoExpansionCard is an abstraction of a PCI card.
 
-$Id: CiscoExpansionCard.py,v 1.0 2010/12/13 18:19:38 egor Exp $"""
+$Id: CiscoExpansionCard.py,v 1.1 2010/12/14 21:56:29 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Globals import InitializeClass
 from Products.ZenModel.ExpansionCard import ExpansionCard
@@ -25,14 +25,15 @@ class CiscoExpansionCard(ExpansionCard):
 
     portal_type = meta_type = 'CiscoExpansionCard'
 
-    state = "unknown"
-    HWVer = "unknown"
-    FWRev = "unknown"
-    monitor = True
+    state = "Up"
+    HWVer = ""
+    SWVer = ""
+    FWRev = ""
 
     _properties = ExpansionCard._properties + (
         {'id':'state', 'type':'string', 'mode':'w'},
         {'id':'HWver', 'type':'string', 'mode':'w'},
+        {'id':'SWver', 'type':'string', 'mode':'w'},
         {'id':'FWRev', 'type':'string', 'mode':'w'},
     )
 
@@ -52,11 +53,6 @@ class CiscoExpansionCard(ExpansionCard):
                 , 'action'        : 'viewCiscoExpansionCard'
                 , 'permissions'   : (ZEN_VIEW,)
                 },
-                { 'id'            : 'perfConf'
-                , 'name'          : 'Template'
-                , 'action'        : 'objTemplates'
-                , 'permissions'   : (ZEN_CHANGE_DEVICE, )
-                },
                 { 'id'            : 'viewHistory'
                 , 'name'          : 'Modifications'
                 , 'action'        : 'viewHistory'
@@ -65,6 +61,7 @@ class CiscoExpansionCard(ExpansionCard):
             )
           },
         )
+
 
     def statusDot(self, status=None):
         """
@@ -75,10 +72,35 @@ class CiscoExpansionCard(ExpansionCard):
         severity = self.ZenEventManager.getMaxSeverity(self)
         return colors.get(severity, 'grey')
 
+
     def statusString(self, status=None):
         """
         Return the status string
         """
-        return self.state or 'Unknown'
+        return self.state or 'Up'
+
+
+    def getProductPartNumber(self):
+        return getattr(self.productClass(), 'partNumber', '')
+
+
+    def setProductKey(self, prodKey, manufacturer=None, partNumber=""):
+        """Set the product class of this software by its productKey.
+        """
+        if prodKey:
+            # Store these so we can return the proper value from getProductKey
+            self._prodKey = prodKey
+            self._manufacturer = manufacturer
+
+            if manufacturer is None:
+                manufacturer = 'Unknown'
+
+            manufs = self.getDmdRoot("Manufacturers")
+            prodobj = manufs.createHardwareProduct(prodKey, manufacturer,
+                                                    partNumber=partNumber)
+            self.productClass.addRelation(prodobj)
+        else:
+            self.productClass.removeRelation()
+
 
 InitializeClass(CiscoExpansionCard)

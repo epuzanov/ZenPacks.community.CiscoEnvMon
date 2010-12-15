@@ -1,11 +1,11 @@
 <tal:block tal:define="
         objects  python:here.getDmdRoot('Devices').Network.getSubDevices(
-                                       lambda x: x.hw.getManufacturerName()=='Cisco');
+                                lambda x: x.hw.getManufacturerName()=='Cisco');
         tableName string: ciscodevicesreport;
-        batch python:here.ZenTableManager.getBatch(tableName,objects,
-                sortedHeader='createdTime',sortedSence='desc');
-        exportFields python:['titleOrId', 'getDeviceClassPath', 'getManufacturerName',
-                        'getHWProductName', 'getOSProductName', 'getHWSerialNumber']
+        batch python:here.ZenTableManager.getBatch(tableName,objects);
+        exportFields python:['titleOrId', 'getDeviceClassPath',
+                        'getHWManufacturerName', 'getHWProductName',
+                        'getOSProductName', 'getHWSerialNumber']
         ">
 <tal:block metal:use-macro="here/reportMacros/macros/exportableReport">
 <tal:block metal:fill-slot="report">
@@ -17,7 +17,7 @@
 <tal:block metal:fill-slot="contentPane">
 
 <form method="POST" tal:attributes="action request/URL;"
-                        tal:define="tabletitle string:New Devices;
+                        tal:define="tabletitle string:Devices;
                         showfilterbox python:True;
                                                         tblcolspan string:6">
 <tal:block metal:use-macro="here/zenuimacros/macros/zentable">
@@ -29,7 +29,7 @@
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                             tableName,'getDeviceClassPath','Class')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'getManufacturerName','Manufacturer')"/>
+                            tableName,'getHWManufacturerName','Manufacturer')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                             tableName,'getHWProductName','Model')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
@@ -43,7 +43,7 @@
                 tal:content="device/titleOrId">device</a>
         </td>
                 <td class="tablevalues" tal:content="device/getDeviceClassPath"/>
-                <td class="tablevalues" tal:content="device/getManufacturerName"/>
+                <td class="tablevalues" tal:content="device/getHWManufacturerName"/>
                 <td class="tablevalues" tal:content="device/getHWProductName"/>
                 <td class="tablevalues" tal:content="device/getOSProductName"/>
                 <td class="tablevalues" tal:content="device/getHWSerialNumber"/>

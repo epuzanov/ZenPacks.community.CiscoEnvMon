@@ -12,9 +12,9 @@ __doc__="""interfaces
 
 describes the form field to the user interface.
 
-$Id: interfaces.py,v 1.0 2010/12/14 00:02:14 egor Exp $"""
+$Id: interfaces.py,v 1.1 2010/12/14 22:00:44 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Products.Zuul.interfaces import IThresholdInfo, IComponentInfo
 from Products.Zuul.form import schema
@@ -27,12 +27,14 @@ class ICiscoExpansionCardInfo(IComponentInfo):
     """
     status = schema.Text(title=u"Status", readonly=True, group='Overview')
     manufacturer = schema.Entity(title=u"Manufacturer", readonly=True,
-                                group='Details')
+                                                            group='Details')
     product = schema.Entity(title=u"Model", readonly=True, group='Details')
     serialNumber = schema.Text(title=u"Serial #", readonly=True, group='Details')
+    partNumber = schema.Text(title=u"Part #", readonly=True, group='Details')
     slot = schema.Int(title=u"Slot", readonly=True, group='Details')
     HWVer = schema.Int(title=u"HW Version", readonly=True, group='Details')
-    FWRev = schema.Int(title=u"SW Version", readonly=True, group='Details')
+    SWVer = schema.Int(title=u"SW Version", readonly=True, group='Details')
+    FWRev = schema.Int(title=u"Firmware", readonly=True, group='Details')
 
 
 class ICiscoFanInfo(IComponentInfo):

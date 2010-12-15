@@ -12,9 +12,9 @@ __doc__="""info.py
 
 Representation of modules.
 
-$Id: info.py,v 1.0 2010/12/14 00:00:21 egor Exp $"""
+$Id: info.py,v 1.1 2010/12/14 21:57:58 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from zope.interface import implements
 from Products.Zuul.infos import ProxyProperty
@@ -30,7 +30,12 @@ class CiscoExpansionCardInfo(ComponentInfo):
     serialNumber = ProxyProperty("serialNumber")
     slot = ProxyProperty("slot")
     HWVer = ProxyProperty("HWVer")
+    SWVer = ProxyProperty("SWVer")
     FWRev = ProxyProperty("FWRev")
+
+    @property
+    def partNumber(self):
+        self._object.getProductPartNumber()
 
     @property
     @info

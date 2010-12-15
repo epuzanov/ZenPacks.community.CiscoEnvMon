@@ -10,11 +10,11 @@
 
 __doc__="""CiscoExpansionCardMap
 
-CiscoExpansionCardMap maps the cardTable table to cards objects
+CiscoExpansionCardMap maps the entPhysicalTable table to cards objects
 
-$Id: CiscoExpansionCardMap.py,v 1.0 2010/12/08 21:51:11 egor Exp $"""
+$Id: CiscoExpansionCardMap.py,v 1.1 2010/12/14 19:25:37 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
 from Products.DataCollector.plugins.DataMaps import MultiArgs
@@ -29,44 +29,42 @@ class CiscoExpansionCardMap(SnmpPlugin):
 
     snmpGetTableMaps = (
         GetTableMap('cardTable',
-                    '.1.3.6.1.4.1.9.3.6.11.1',
+                    '.1.3.6.1.2.1.47.1.1.1.1',
                     {
-                        '.3': 'setProductKey',
-                        '.4': 'serialNumber',
-                        '.5': 'HWVer',
-                        '.6': 'FWRev',
-                        '.7': 'slot',
-                        '.8': '_cbi',
-                        '.9': 'state',
+                        '.2': 'setProductKey',
+                        '.4': '_cbi',
+                        '.5': '_class',
+                        '.6': 'slot',
+                        '.8': 'HWVer',
+                        '.9': 'FWRev',
+                        '.10': 'SWVer',
+                        '.11': 'serialNumber',
+                        '.13': '_pn',
                     }
         ),
     )
 
-    states  =  {1:'unknown',
-                2:'up',
-                3:'down',
-                4:'standby',
-                }
 
     def process(self, device, results, log):
         """collect snmp information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         getdata, tabledata = results
         rm = self.relMap()
+        chassis = {}
         for oid, card in tabledata.get("cardTable",{}).iteritems():
+            if int(card['_class']) == 5 and card['_cbi'] == 1:
+                chassis[oid] = card['slot']
+        for oid, card in tabledata.get("cardTable",{}).iteritems():
+            if int(card.get('_class', 0)) != 9: continue
             try:
                 om = self.objectMap(card)
                 om.snmpindex = oid.strip('.')
-                if int(getattr(om, '_cbi', 0)) != 0:
-                    try:
-                        pslot = tabledata["cardTable"][str(om._cbi)]["slot"]
-                        om.slot = "%02d.%s"%(pslot, om.slot)
-                    except: continue
-                else:
-                    om.slot = "%02d"%om.slot
+                if int(getattr(om, '_cbi', 0)) > 2:
+                    om.slot = chassis.get(str(om._cbi), None)
+                    if not om.slot: continue
                 om.id = self.prepId(om.slot)
-                om.setProductKey = MultiArgs(om.setProductKey, 'Cisco')
-                om.state = self.states.get(int(om.state), 'unknown')
+                if " " in om.HWVer: om.HWVer = om.HWVer.split()[0]
+                om.setProductKey = MultiArgs(om.setProductKey, 'Cisco', om._pn)
             except AttributeError:
                 continue
             rm.append(om)

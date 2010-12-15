@@ -24,16 +24,16 @@
       </td>
     </tr>
     <tr>
+      <td class="tableheader" align=left>Slot</td>
+      <td class="tablevalues" tal:content="here/slot">1</td>
+      <td class="tableheader" align=left>Firmware</td>
+      <td class="tablevalues" tal:content="here/FWRev">1</td>
+    </tr>
+    <tr>
       <td class="tableheader" align=left>HW Version</td>
       <td class="tablevalues" tal:content="here/HWVer">1</td>
       <td class="tableheader" align=left>SW Version</td>
-      <td class="tablevalues" tal:content="here/FWRev">1</td>
-    <tr>
-      <td class="tableheader" align=left>Slot</td>
-      <td class="tablevalues" tal:content="here/slot">1</td>
-      <td class="tableheader" align=left>Status</td>
-      <td class="tablevalues" tal:content="here/statusString">1</td>
-    </tr>
+      <td class="tablevalues" tal:content="here/SWVer">1</td>
     <tr tal:condition="manager">
         <td align="left" class="tableheader" colspan="4">
             <input class="tableheader" type="submit" value=" Save "

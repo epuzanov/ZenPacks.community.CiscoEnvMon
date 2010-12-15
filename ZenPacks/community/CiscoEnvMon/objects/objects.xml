@@ -1,80 +1,5 @@
 <?xml version="1.0"?>
 <objects>
-<!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'Router', 'Cisco', 'rrdTemplates', 'CiscoExpansionCard') -->
-<object id='/zport/dmd/Devices/Network/Router/Cisco/rrdTemplates/CiscoExpansionCard' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
-<property id='zendoc' type='string'>
-Cisco Module status template
-</property>
-<property type="text" id="description" mode="w" >
-Cisco Module status template
-</property>
-<property type="string" id="targetPythonClass" mode="w" >
-ZenPacks.community.CiscoEnvMon.CiscoExpansionCard
-</property>
-<tomanycont id='datasources'>
-<object id='state' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
-<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
-SNMP
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Cmd/Fail
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="cycletime" mode="w" >
-300
-</property>
-<property type="string" id="oid" mode="w" >
-1.3.6.1.4.1.9.3.6.11.1.9
-</property>
-<property type="boolean" id="usessh" mode="w" >
-False
-</property>
-<property type="string" id="parser" mode="w" >
-Auto
-</property>
-<tomanycont id='datapoints'>
-<object id='state' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-</tomanycont>
-</object>
-</tomanycont>
-<tomanycont id='thresholds'>
-<object id='ExpansionCard status' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
-<property label="DataPoints" type="lines" id="dsnames" mode="w" >
-['state_state']
-</property>
-<property label="Enabled" type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="string" id="minval" mode="w" >
-2
-</property>
-<property type="string" id="maxval" mode="w" >
-2
-</property>
-<property type="string" id="eventClass" mode="w" >
-/Status/CiscoExpansionCard
-</property>
-<property type="int" id="severity" mode="w" >
-3
-</property>
-<property type="int" id="escalateCount" mode="w" >
-0
-</property>
-</object>
-</tomanycont>
-</object>
 <!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'Router', 'Cisco', 'rrdTemplates', 'CiscoFan') -->
 <object id='/zport/dmd/Devices/Network/Router/Cisco/rrdTemplates/CiscoFan' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
 <property id='zendoc' type='string'>
@@ -447,27 +372,6 @@ defaultmapping
 </tomanycont>
 </object>
 </object>
-<!-- ('', 'zport', 'dmd', 'Events', 'Status', 'CiscoExpansionCard') -->
-<object id='/zport/dmd/Events/Status/CiscoExpansionCard' module='Products.ZenEvents.EventClass' class='EventClass'>
-<property type="text" id="transform" mode="w" >
-status = float(evt.message.split()[-1]) 
-state = {1:'unknown',2:'up',3:'down',4:'standby'}.get(status, 'unknown')
-evt.summary = "%s (%s)"%(evt.message, state)
-evt.severity = {1:3,2:0,3:5,4:3}.get(status, 3)
-if evt.firstTime == evt.lastTime:
-    device.hw.cards._getOb(evt.component).state = state
-    txnCommit()
-</property>
-<property type="text" id="transform" mode="w" >
-status = float(evt.message.split()[-1]) 
-state = {1:'unknown',2:'up',3:'down',4:'standby'}.get(status, 'unknown')
-evt.summary = "%s (%s)"%(evt.message, state)
-evt.severity = {1:3,2:0,3:5,4:3}.get(status, 3)
-if evt.firstTime == evt.lastTime:
-    device.hw.cards._getOb(evt.component).state = state
-    txnCommit()
-</property>
-</object>
 <!-- ('', 'zport', 'dmd', 'Events', 'Status', 'CiscoFan') -->
 <object id='/zport/dmd/Events/Status/CiscoFan' module='Products.ZenEvents.EventClass' class='EventClass'>
 <property type="text" id="transform" mode="w" >
@@ -533,5 +437,8 @@ if evt.firstTime == evt.lastTime:
 </object>
 <!-- ('', 'zport', 'dmd', 'Reports', 'Device Reports', 'Cisco Reports', 'Modules') -->
 <object id='/zport/dmd/Reports/Device Reports/Cisco Reports/Modules' module='Products.ZenModel.Report' class='Report'>
+</object>
+<!-- ('', 'zport', 'dmd', 'Reports', 'Device Reports', 'Cisco Reports', 'Devices') -->
+<object id='/zport/dmd/Reports/Device Reports/Cisco Reports/Devices' module='Products.ZenModel.Report' class='Report'>
 </object>
 </objects>
