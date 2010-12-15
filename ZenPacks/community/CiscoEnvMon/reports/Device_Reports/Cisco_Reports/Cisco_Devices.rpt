@@ -17,7 +17,7 @@
 <tal:block metal:fill-slot="contentPane">
 
 <form method="POST" tal:attributes="action request/URL;"
-                        tal:define="tabletitle string:Devices;
+                        tal:define="tabletitle string:Cisco Devices;
                         showfilterbox python:True;
                                                         tblcolspan string:6">
 <tal:block metal:use-macro="here/zenuimacros/macros/zentable">

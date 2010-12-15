@@ -12,9 +12,9 @@ __doc__="""CiscoExpansionCardMap
 
 CiscoExpansionCardMap maps the entPhysicalTable table to cards objects
 
-$Id: CiscoExpansionCardMap.py,v 1.1 2010/12/14 19:25:37 egor Exp $"""
+$Id: CiscoExpansionCardMap.py,v 1.2 2010/12/15 13:15:37 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
 from Products.DataCollector.plugins.DataMaps import MultiArgs
@@ -63,7 +63,7 @@ class CiscoExpansionCardMap(SnmpPlugin):
                     om.slot = chassis.get(str(om._cbi), None)
                     if not om.slot: continue
                 om.id = self.prepId(om.slot)
-                if " " in om.HWVer: om.HWVer = om.HWVer.split()[0]
+                if getattr(om,'HWVer','').strip(): om.HWVer=om.HWVer.split()[0]
                 om.setProductKey = MultiArgs(om.setProductKey, 'Cisco', om._pn)
             except AttributeError:
                 continue

@@ -435,10 +435,10 @@ if evt.firstTime == evt.lastTime:
     txnCommit()
 </property>
 </object>
+<!-- ('', 'zport', 'dmd', 'Reports', 'Device Reports', 'Cisco Reports', 'Cisco Devices') -->
+<object id='/zport/dmd/Reports/Device Reports/Cisco Reports/Cisco Devices' module='Products.ZenModel.Report' class='Report'>
+</object>
 <!-- ('', 'zport', 'dmd', 'Reports', 'Device Reports', 'Cisco Reports', 'Modules') -->
 <object id='/zport/dmd/Reports/Device Reports/Cisco Reports/Modules' module='Products.ZenModel.Report' class='Report'>
-</object>
-<!-- ('', 'zport', 'dmd', 'Reports', 'Device Reports', 'Cisco Reports', 'Devices') -->
-<object id='/zport/dmd/Reports/Device Reports/Cisco Reports/Devices' module='Products.ZenModel.Report' class='Report'>
 </object>
 </objects>
