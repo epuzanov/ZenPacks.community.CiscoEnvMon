@@ -2,9 +2,6 @@
 <objects>
 <!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'Router', 'Cisco', 'rrdTemplates', 'CiscoFan') -->
 <object id='/zport/dmd/Devices/Network/Router/Cisco/rrdTemplates/CiscoFan' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
-<property id='zendoc' type='string'>
-Cisco Environment Fans status template
-</property>
 <property type="text" id="description" mode="w" >
 Cisco Environment Fans status template
 </property>
@@ -77,9 +74,6 @@ True
 </object>
 <!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'Router', 'Cisco', 'rrdTemplates', 'CiscoPowerSupply') -->
 <object id='/zport/dmd/Devices/Network/Router/Cisco/rrdTemplates/CiscoPowerSupply' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
-<property id='zendoc' type='string'>
-Cisco Environment PowerSupply status template
-</property>
 <property type="text" id="description" mode="w" >
 Cisco Environment PowerSupply status template
 </property>
@@ -152,9 +146,6 @@ True
 </object>
 <!-- ('', 'zport', 'dmd', 'Devices', 'Network', 'Router', 'Cisco', 'rrdTemplates', 'CiscoTemperatureSensor') -->
 <object id='/zport/dmd/Devices/Network/Router/Cisco/rrdTemplates/CiscoTemperatureSensor' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
-<property id='zendoc' type='string'>
-Cisco Environment Temperature Sensors template
-</property>
 <property type="text" id="description" mode="w" >
 Cisco Environment Temperature Sensors template
 </property>
