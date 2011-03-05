@@ -39,7 +39,8 @@ ZC.CiscoExpansionCardPanel = Ext.extend(ZC.ComponentGridPanel, {
                 {name: 'manufacturer'},
                 {name: 'product'},
                 {name: 'serialNumber'},
-                {name: 'hasMonitor'},
+                {name: 'usesMonitorAttribute'},
+                {name: 'monitored'},
                 {name: 'monitor'}
             ],
             columns: [{
@@ -67,10 +68,9 @@ ZC.CiscoExpansionCardPanel = Ext.extend(ZC.ComponentGridPanel, {
                 dataIndex: 'serialNumber',
                 header: _t('Serial #')
             },{
-                id: 'monitor',
-                dataIndex: 'monitor',
+                id: 'monitored',
+                dataIndex: 'monitored',
                 header: _t('Monitored'),
-                renderer: Zenoss.render.monitor,
                 width: 60
             },{
                 id: 'status',
@@ -96,7 +96,8 @@ ZC.CiscoFanPanel = Ext.extend(ZC.ComponentGridPanel, {
                 {name: 'status'},
                 {name: 'name'},
                 {name: 'rpmString'},
-                {name: 'hasMonitor'},
+                {name: 'usesMonitorAttribute'},
+                {name: 'monitored'},
                 {name: 'monitor'}
             ],
             columns: [{
@@ -114,10 +115,9 @@ ZC.CiscoFanPanel = Ext.extend(ZC.ComponentGridPanel, {
                 dataIndex: 'rpmString',
                 header: _t('Speed')
             },{
-                id: 'monitor',
-                dataIndex: 'monitor',
+                id: 'monitored',
+                dataIndex: 'monitored',
                 header: _t('Monitored'),
-                renderer: Zenoss.render.monitor,
                 width: 60
             },{
                 id: 'status',
@@ -143,7 +143,8 @@ ZC.CiscoTemperatureSensorPanel = Ext.extend(ZC.ComponentGridPanel, {
                 {name: 'status'},
                 {name: 'name'},
                 {name: 'tempString'},
-                {name: 'hasMonitor'},
+                {name: 'usesMonitorAttribute'},
+                {name: 'monitored'},
                 {name: 'monitor'}
             ],
             columns: [{
@@ -161,10 +162,9 @@ ZC.CiscoTemperatureSensorPanel = Ext.extend(ZC.ComponentGridPanel, {
                 dataIndex: 'tempString',
                 header: _t('Temperature')
             },{
-                id: 'monitor',
-                dataIndex: 'monitor',
+                id: 'monitored',
+                dataIndex: 'monitored',
                 header: _t('Monitored'),
-                renderer: Zenoss.render.monitor,
                 width: 60
             },{
                 id: 'status',
@@ -192,7 +192,8 @@ ZC.CiscoPowerSupplyPanel = Ext.extend(ZC.ComponentGridPanel, {
                 {name: 'type'},
                 {name: 'wattsString'},
                 {name: 'millivoltsString'},
-                {name: 'hasMonitor'},
+                {name: 'usesMonitorAttribute'},
+                {name: 'monitored'},
                 {name: 'monitor'}
             ],
             columns: [{
@@ -218,10 +219,9 @@ ZC.CiscoPowerSupplyPanel = Ext.extend(ZC.ComponentGridPanel, {
                 dataIndex: 'millivoltsString',
                 header: _t('Voltage')
             },{
-                id: 'monitor',
-                dataIndex: 'monitor',
+                id: 'monitored',
+                dataIndex: 'monitored',
                 header: _t('Monitored'),
-                renderer: Zenoss.render.monitor,
                 width: 60
             },{
                 id: 'status',
