@@ -311,94 +311,142 @@ AVERAGE
 <!-- ('', 'zport', 'dmd', 'Events', 'Status', 'CiscoFan') -->
 <object id='/zport/dmd/Events/Status/CiscoFan' module='Products.ZenEvents.EventClass' class='EventClass'>
 <property type="text" id="transform" mode="w" >
-status = evt.message.split()[-1]
-if status.replace('.', '').isdigit():
-    status = float(status)
-else:
-    status = 0
-state = {0:'unknown',1:'normal',2:'warning',3:'critical',4:'shutdown',5:'notPresent',6:'notFunctioning'}.get(status, 'unknown')
-evt.summary = "%s (%s)"%(evt.message, state)
-evt.severity = {0:3,1:0,2:3,3:5,4:4,5:4,6:4}.get(status, 3)
-component = device.hw.fans._getOb(evt.component, None)
-if component and getattr(component, 'state', state) != state:
-    component.state = state
-    txnCommit()
+try: comp = component
+except NameError:
+    from ZODB.transact import transact
+    for comp in device.hw.temperaturesensors():
+        if comp.id == evt.component: break
+    else:
+        comp = None
+if comp is not None:
+    statusstr = evt.message.split()[-1].strip()
+    status = statusstr.replace('.','').isdigit() and int(round(float(statusstr))) or 0
+    state = {0:'unknown',1:'normal',2:'warning',3:'critical',4:'shutdown',5:'notPresent',6:'notFunctioning'}.get(status, 'unknown')
+    evt.summary = "%s (%s)"%(evt.message, state)
+    evt.severity = {0:3,1:0,2:3,3:5,4:4,5:4,6:4}.get(status, 3)
+    if comp.state == state:
+        evt._action = 'drop'
+    else:
+        @transact
+        def updateDb():
+            comp.state = state
+        updateDb()
 </property>
 <property type="text" id="transform" mode="w" >
-status = evt.message.split()[-1]
-if status.replace('.', '').isdigit():
-    status = float(status)
-else:
-    status = 0
-state = {0:'unknown',1:'normal',2:'warning',3:'critical',4:'shutdown',5:'notPresent',6:'notFunctioning'}.get(status, 'unknown')
-evt.summary = "%s (%s)"%(evt.message, state)
-evt.severity = {0:3,1:0,2:3,3:5,4:4,5:4,6:4}.get(status, 3)
-component = device.hw.fans._getOb(evt.component, None)
-if component and getattr(component, 'state', state) != state:
-    component.state = state
-    txnCommit()
+try: comp = component
+except NameError:
+    from ZODB.transact import transact
+    for comp in device.hw.temperaturesensors():
+        if comp.id == evt.component: break
+    else:
+        comp = None
+if comp is not None:
+    statusstr = evt.message.split()[-1].strip()
+    status = statusstr.replace('.','').isdigit() and int(round(float(statusstr))) or 0
+    state = {0:'unknown',1:'normal',2:'warning',3:'critical',4:'shutdown',5:'notPresent',6:'notFunctioning'}.get(status, 'unknown')
+    evt.summary = "%s (%s)"%(evt.message, state)
+    evt.severity = {0:3,1:0,2:3,3:5,4:4,5:4,6:4}.get(status, 3)
+    if comp.state == state:
+        evt._action = 'drop'
+    else:
+        @transact
+        def updateDb():
+            comp.state = state
+        updateDb()
 </property>
 </object>
 <!-- ('', 'zport', 'dmd', 'Events', 'Status', 'CiscoPowerSupply') -->
 <object id='/zport/dmd/Events/Status/CiscoPowerSupply' module='Products.ZenEvents.EventClass' class='EventClass'>
 <property type="text" id="transform" mode="w" >
-status = evt.message.split()[-1]
-if status.replace('.', '').isdigit():
-    status = float(status)
-else:
-    status = 0
-state = {0:'unknown',1:'normal',2:'warning',3:'critical',4:'shutdown',5:'notPresent',6:'notFunctioning'}.get(status, 'unknown')
-evt.summary = "%s (%s)"%(evt.message, state)
-evt.severity = {0:3,1:0,2:3,3:5,4:4,5:4,6:4}.get(status, 3)
-component = device.hw.powersupplies._getOb(evt.component, None)
-if component and getattr(component, 'state', state) != state:
-    component.state = state
-    txnCommit()
+try: comp = component
+except NameError:
+    from ZODB.transact import transact
+    for comp in device.hw.temperaturesensors():
+        if comp.id == evt.component: break
+    else:
+        comp = None
+if comp is not None:
+    statusstr = evt.message.split()[-1].strip()
+    status = statusstr.replace('.','').isdigit() and int(round(float(statusstr))) or 0
+    state = {0:'unknown',1:'normal',2:'warning',3:'critical',4:'shutdown',5:'notPresent',6:'notFunctioning'}.get(status, 'unknown')
+    evt.summary = "%s (%s)"%(evt.message, state)
+    evt.severity = {0:3,1:0,2:3,3:5,4:4,5:4,6:4}.get(status, 3)
+    if comp.state == state:
+        evt._action = 'drop'
+    else:
+        @transact
+        def updateDb():
+            comp.state = state
+        updateDb()
 </property>
 <property type="text" id="transform" mode="w" >
-status = evt.message.split()[-1]
-if status.replace('.', '').isdigit():
-    status = float(status)
-else:
-    status = 0
-state = {0:'unknown',1:'normal',2:'warning',3:'critical',4:'shutdown',5:'notPresent',6:'notFunctioning'}.get(status, 'unknown')
-evt.summary = "%s (%s)"%(evt.message, state)
-evt.severity = {0:3,1:0,2:3,3:5,4:4,5:4,6:4}.get(status, 3)
-component = device.hw.powersupplies._getOb(evt.component, None)
-if component and getattr(component, 'state', state) != state:
-    component.state = state
-    txnCommit()
+try: comp = component
+except NameError:
+    from ZODB.transact import transact
+    for comp in device.hw.temperaturesensors():
+        if comp.id == evt.component: break
+    else:
+        comp = None
+if comp is not None:
+    statusstr = evt.message.split()[-1].strip()
+    status = statusstr.replace('.','').isdigit() and int(round(float(statusstr))) or 0
+    state = {0:'unknown',1:'normal',2:'warning',3:'critical',4:'shutdown',5:'notPresent',6:'notFunctioning'}.get(status, 'unknown')
+    evt.summary = "%s (%s)"%(evt.message, state)
+    evt.severity = {0:3,1:0,2:3,3:5,4:4,5:4,6:4}.get(status, 3)
+    if comp.state == state:
+        evt._action = 'drop'
+    else:
+        @transact
+        def updateDb():
+            comp.state = state
+        updateDb()
 </property>
 </object>
 <!-- ('', 'zport', 'dmd', 'Events', 'Status', 'CiscoTemperatureSensor') -->
 <object id='/zport/dmd/Events/Status/CiscoTemperatureSensor' module='Products.ZenEvents.EventClass' class='EventClass'>
 <property type="text" id="transform" mode="w" >
-status = evt.message.split()[-1]
-if status.replace('.', '').isdigit():
-    status = float(status)
-else:
-    status = 0
-state = {0:'unknown',1:'normal',2:'warning',3:'critical',4:'shutdown',5:'notPresent',6:'notFunctioning'}.get(status, 'unknown')
-evt.summary = "%s (%s)"%(evt.message, state)
-evt.severity = {0:3,1:0,2:3,3:5,4:4,5:4,6:4}.get(status, 3)
-component = device.hw.temperaturesensors._getOb(evt.component, None)
-if component and getattr(component, 'state', state) != state:
-    component.state = state
-    txnCommit()
+try: comp = component
+except NameError:
+    from ZODB.transact import transact
+    for comp in device.hw.temperaturesensors():
+        if comp.id == evt.component: break
+    else:
+        comp = None
+if comp is not None:
+    statusstr = evt.message.split()[-1].strip()
+    status = statusstr.replace('.','').isdigit() and int(round(float(statusstr))) or 0
+    state = {0:'unknown',1:'normal',2:'warning',3:'critical',4:'shutdown',5:'notPresent',6:'notFunctioning'}.get(status, 'unknown')
+    evt.summary = "%s (%s)"%(evt.message, state)
+    evt.severity = {0:3,1:0,2:3,3:5,4:4,5:4,6:4}.get(status, 3)
+    if comp.state == state:
+        evt._action = 'drop'
+    else:
+        @transact
+        def updateDb():
+            comp.state = state
+        updateDb()
 </property>
 <property type="text" id="transform" mode="w" >
-status = evt.message.split()[-1]
-if status.replace('.', '').isdigit():
-    status = float(status)
-else:
-    status = 0
-state = {0:'unknown',1:'normal',2:'warning',3:'critical',4:'shutdown',5:'notPresent',6:'notFunctioning'}.get(status, 'unknown')
-evt.summary = "%s (%s)"%(evt.message, state)
-evt.severity = {0:3,1:0,2:3,3:5,4:4,5:4,6:4}.get(status, 3)
-component = device.hw.temperaturesensors._getOb(evt.component, None)
-if component and getattr(component, 'state', state) != state:
-    component.state = state
-    txnCommit()
+try: comp = component
+except NameError:
+    from ZODB.transact import transact
+    for comp in device.hw.temperaturesensors():
+        if comp.id == evt.component: break
+    else:
+        comp = None
+if comp is not None:
+    statusstr = evt.message.split()[-1].strip()
+    status = statusstr.replace('.','').isdigit() and int(round(float(statusstr))) or 0
+    state = {0:'unknown',1:'normal',2:'warning',3:'critical',4:'shutdown',5:'notPresent',6:'notFunctioning'}.get(status, 'unknown')
+    evt.summary = "%s (%s)"%(evt.message, state)
+    evt.severity = {0:3,1:0,2:3,3:5,4:4,5:4,6:4}.get(status, 3)
+    if comp.state == state:
+        evt._action = 'drop'
+    else:
+        @transact
+        def updateDb():
+            comp.state = state
+        updateDb()
 </property>
 </object>
 <!-- ('', 'zport', 'dmd', 'Reports', 'Device Reports', 'Cisco Reports', 'Cisco Devices') -->
