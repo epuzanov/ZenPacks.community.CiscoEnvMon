@@ -3,7 +3,7 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = "ZenPacks.community.CiscoEnvMon"
-VERSION = "1.2"
+VERSION = "1.2.0"
 AUTHOR = "Egor Puzanov"
 LICENSE = "GPLv2"
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']

@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the CiscoEnvMon Zenpack for Zenoss.
-# Copyright (C) 2010 Egor Puzanov.
+# Copyright (C) 2010-2013 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -13,9 +13,9 @@ __doc__="""CiscoTemperatureSensorMap
 CiscoTemperatureSensorMap maps the ciscoEnvMonTemperatureStatusTable table to
 temperaturesensors objects
 
-$Id: CiscoTemperatureSensorMap.py,v 1.0 2010/12/06 14:34:47 egor Exp $"""
+$Id: CiscoTemperatureSensorMap.py,v 1.1 2013/02/28 19:16:47 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
 
@@ -53,6 +53,7 @@ class CiscoTemperatureSensorMap(SnmpPlugin):
         for oid, tsensor in tabledata.get("TemperatureTable",{}).iteritems():
             try:
                 om = self.objectMap(tsensor)
+                if int(om.state) > 3: continue
                 om.snmpindex = oid.strip('.')
                 om.id = self.prepId(om.id)
                 om.state = self.states.get(int(om.state), 'unknown')

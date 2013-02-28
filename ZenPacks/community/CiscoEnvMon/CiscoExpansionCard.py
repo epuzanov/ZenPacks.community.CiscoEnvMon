@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the CiscoEnvMon Zenpack for Zenoss.
-# Copyright (C) 2010 Egor Puzanov.
+# Copyright (C) 2010-2013 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""CiscoExpansionCard
 
 CiscoExpansionCard is an abstraction of a PCI card.
 
-$Id: CiscoExpansionCard.py,v 1.1 2010/12/14 21:56:29 egor Exp $"""
+$Id: CiscoExpansionCard.py,v 1.2 2013/02/28 19:02:26 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Globals import InitializeClass
 from Products.ZenModel.ExpansionCard import ExpansionCard
@@ -62,7 +62,6 @@ class CiscoExpansionCard(ExpansionCard):
           },
         )
 
-
     def statusDot(self, status=None):
         """
         Return the Dot Color based on maximal severity
@@ -72,17 +71,14 @@ class CiscoExpansionCard(ExpansionCard):
         severity = self.ZenEventManager.getMaxSeverity(self)
         return colors.get(severity, 'grey')
 
-
     def statusString(self, status=None):
         """
         Return the status string
         """
         return self.state or 'Up'
 
-
     def getProductPartNumber(self):
         return getattr(self.productClass(), 'partNumber', '')
-
 
     def setProductKey(self, prodKey, manufacturer=None, partNumber=""):
         """Set the product class of this software by its productKey.
@@ -102,5 +98,12 @@ class CiscoExpansionCard(ExpansionCard):
         else:
             self.productClass.removeRelation()
 
+    def manage_deleteComponent(self, REQUEST=None):
+        """
+        Delete Component
+        """
+        self.getPrimaryParent()._delObject(self.id)
+        if REQUEST is not None:
+            REQUEST['RESPONSE'].redirect(self.device().hw.absolute_url())
 
 InitializeClass(CiscoExpansionCard)

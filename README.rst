@@ -31,7 +31,7 @@ user.
 
     ::
 
-        zenpack --install ZenPacks.community.CiscoEnvMon-1.2.egg
+        zenpack --install ZenPacks.community.CiscoEnvMon-1.2.0.egg
         zenoss restart
 
 Developer Installation (link mode)

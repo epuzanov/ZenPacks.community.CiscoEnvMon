@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the CiscoEnvMon Zenpack for Zenoss.
-# Copyright (C) 2010 Egor Puzanov.
+# Copyright (C) 2010-2013 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""CiscoPowerSupply
 
 CiscoPowerSupply is an abstraction of a PowerSupply.
 
-$Id: CiscoPowerSupply.py,v 1.0 2010/12/13 20:02:33 egor Exp $"""
+$Id: CiscoPowerSupply.py,v 1.1 2013/02/28 19:04:50 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Globals import InitializeClass
 from Products.ZenModel.PowerSupply import PowerSupply
@@ -38,5 +38,13 @@ class CiscoPowerSupply(PowerSupply):
         Return the status string
         """
         return self.state or 'Unknown'
+
+    def manage_deleteComponent(self, REQUEST=None):
+        """
+        Delete Component
+        """
+        self.getPrimaryParent()._delObject(self.id)
+        if REQUEST is not None:
+            REQUEST['RESPONSE'].redirect(self.device().hw.absolute_url())
 
 InitializeClass(CiscoPowerSupply)
